@@ -1,18 +1,10 @@
-FROM python:3.10-slim
+FROM php:8.2-apache
 
-WORKDIR /app
+# Copy semua file ke dalam folder web server
+COPY . /var/www/html/
 
-# Salin file requirements.txt terlebih dahulu
-COPY requirements.txt /app/requirements.txt
+# Aktifkan module rewrite
+RUN a2enmod rewrite
 
-# Install dependensi sistem jika diperlukan
-RUN apt-get update && apt-get install -y libpq-dev build-essential
-
-# Salin requirements.txt terlebih dahulu
-COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-# Salin sisa kode aplikasi
-COPY . /app/
-
-CMD ["python", "app.py"]
+# Expose port 80 untuk web access
+EXPOSE 80
