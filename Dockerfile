@@ -8,8 +8,9 @@ COPY requirements.txt /app/requirements.txt
 # Install dependensi sistem jika diperlukan
 RUN apt-get update && apt-get install -y libpq-dev build-essential
 
-# Install dependensi Python
-RUN pip install --no-cache-dir -r requirements.txt
+# Salin requirements.txt terlebih dahulu
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Salin sisa kode aplikasi
 COPY . /app/
